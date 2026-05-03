@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://ba2arcrctwvm8"]
+
+[ext_resource type="Script" uid="uid://tok04g5e8pjc" path="res://critical/scripts/world_container.gd" id="1_gfvir"]
+
+[node name="WorldContainer" type="Node" unique_id=198936740]
+script = ExtResource("1_gfvir")

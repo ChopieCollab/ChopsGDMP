@@ -1,0 +1,277 @@
+[gd_scene format=3 uid="uid://dvon0hxfjnlo1"]
+
+[ext_resource type="Script" uid="uid://ct63x4d7lwvpi" path="res://user interface/ServerBrowser/serverbrowser.gd" id="1_7705p"]
+
+[node name="ServerBrowser" type="Control" unique_id=2005881011]
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_7705p")
+
+[node name="TabContainer" type="TabContainer" parent="." unique_id=364973329]
+layout_mode = 0
+offset_left = 31.0
+offset_top = 40.0
+offset_right = 1120.0
+offset_bottom = 611.0
+current_tab = 1
+tab_0/title = "Host"
+tab_1/title = "Join"
+
+[node name="Host Steam" type="Control" parent="TabContainer" unique_id=22325564]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 0
+metadata/_tab_name = "Host"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Host Steam" unique_id=520294750]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Options" type="VBoxContainer" parent="TabContainer/Host Steam/HBoxContainer" unique_id=1381941573]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Host Steam/HBoxContainer/Options" unique_id=1983984283]
+layout_mode = 2
+text = "LOBBY OPTIONS"
+horizontal_alignment = 1
+
+[node name="LobbyNameHBox" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/Options" unique_id=1860202179]
+layout_mode = 2
+
+[node name="LB_LobbyName" type="Label" parent="TabContainer/Host Steam/HBoxContainer/Options/LobbyNameHBox" unique_id=1331664002]
+layout_mode = 2
+text = "Lobby Name: "
+
+[node name="TXT_LobbyName" type="LineEdit" parent="TabContainer/Host Steam/HBoxContainer/Options/LobbyNameHBox" unique_id=40228427]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+placeholder_text = "insert your lobby name here"
+max_length = 25
+
+[node name="MaxPlayerHBox" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/Options" unique_id=1486401989]
+layout_mode = 2
+
+[node name="LB_MaxPlayer" type="Label" parent="TabContainer/Host Steam/HBoxContainer/Options/MaxPlayerHBox" unique_id=2065613239]
+layout_mode = 2
+text = "Maximum Players:"
+
+[node name="SB_MaxPlayer" type="SpinBox" parent="TabContainer/Host Steam/HBoxContainer/Options/MaxPlayerHBox" unique_id=251657446]
+layout_mode = 2
+min_value = 1.0
+max_value = 12.0
+value = 4.0
+
+[node name="FriendsOnlyVBox" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/Options" unique_id=880131176]
+layout_mode = 2
+
+[node name="LB_FriendsOnly" type="Label" parent="TabContainer/Host Steam/HBoxContainer/Options/FriendsOnlyVBox" unique_id=710815917]
+layout_mode = 2
+text = "Friends Only? "
+
+[node name="CB_FriendsOnly" type="CheckBox" parent="TabContainer/Host Steam/HBoxContainer/Options/FriendsOnlyVBox" unique_id=671454464]
+layout_mode = 2
+
+[node name="GameOptions" type="VBoxContainer" parent="TabContainer/Host Steam/HBoxContainer" unique_id=1054692776]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Host Steam/HBoxContainer/GameOptions" unique_id=1581109662]
+layout_mode = 2
+text = "GAME OPTIONS"
+horizontal_alignment = 1
+
+[node name="LobbyMapHBox" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/GameOptions" unique_id=1489677184]
+layout_mode = 2
+
+[node name="LB_LobbyMap" type="Label" parent="TabContainer/Host Steam/HBoxContainer/GameOptions/LobbyMapHBox" unique_id=767647607]
+layout_mode = 2
+text = "Lobby Map: "
+
+[node name="TXT_LobbyMap" type="LineEdit" parent="TabContainer/Host Steam/HBoxContainer/GameOptions/LobbyMapHBox" unique_id=478771413]
+custom_minimum_size = Vector2(250, 0)
+layout_mode = 2
+placeholder_text = "this is just here for testing"
+max_length = 25
+
+[node name="NetworkButtons" type="VBoxContainer" parent="TabContainer/Host Steam/HBoxContainer" unique_id=351326279]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons" unique_id=414073160]
+layout_mode = 2
+text = "NETWORK OPTIONS"
+horizontal_alignment = 1
+
+[node name="UseSteamHBox" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons" unique_id=1562569896]
+layout_mode = 2
+
+[node name="LB_UseSteam" type="Label" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons/UseSteamHBox" unique_id=1871064318]
+layout_mode = 2
+text = "Use Steam? "
+
+[node name="CB_UseSteam" type="CheckBox" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons/UseSteamHBox" unique_id=933225203]
+layout_mode = 2
+button_pressed = true
+
+[node name="Filler" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons" unique_id=851764284]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="HostGameHBox" type="HBoxContainer" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons" unique_id=418580568]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+alignment = 2
+
+[node name="Host_Button" type="Button" parent="TabContainer/Host Steam/HBoxContainer/NetworkButtons/HostGameHBox" unique_id=376474283]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Host Game"
+
+[node name="Join Steam" type="Control" parent="TabContainer" unique_id=905773429]
+layout_mode = 2
+metadata/_tab_index = 1
+metadata/_tab_name = "Join"
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Join Steam" unique_id=760901341]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SearchFilter" type="VBoxContainer" parent="TabContainer/Join Steam/HBoxContainer" unique_id=571647336]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=93809658]
+layout_mode = 2
+text = "SEARCH OPTIONS"
+horizontal_alignment = 1
+
+[node name="SlotsOpenVBox" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=1933468799]
+layout_mode = 2
+
+[node name="LB_SlotsOpen" type="Label" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/SlotsOpenVBox" unique_id=1504420302]
+layout_mode = 2
+text = "  Slots Open: "
+
+[node name="SB_SlotsOpen" type="SpinBox" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/SlotsOpenVBox" unique_id=278429777]
+layout_mode = 2
+max_value = 12.0
+
+[node name="FriendsOnlyVBox" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=827892378]
+layout_mode = 2
+
+[node name="LB_FriendsOnly" type="Label" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/FriendsOnlyVBox" unique_id=472927044]
+layout_mode = 2
+text = "  Friends Only? "
+
+[node name="CB_FriendsOnly" type="CheckBox" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/FriendsOnlyVBox" unique_id=1692310398]
+layout_mode = 2
+
+[node name="HideFullVBox" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=225379327]
+layout_mode = 2
+
+[node name="LB_HideFull" type="Label" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/HideFullVBox" unique_id=128064410]
+layout_mode = 2
+text = "  Hide Full?"
+
+[node name="CB_HideFull" type="CheckBox" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/HideFullVBox" unique_id=1787418939]
+layout_mode = 2
+
+[node name="DistanceVBox" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=30078402]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/DistanceVBox" unique_id=923349234]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LB_Distance" type="Label" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/DistanceVBox/VBoxContainer" unique_id=1717760092]
+layout_mode = 2
+text = "  Distance (Close -> All)"
+
+[node name="HS_SearchDistance" type="HSlider" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/DistanceVBox/VBoxContainer" unique_id=401903072]
+layout_mode = 2
+size_flags_horizontal = 3
+max_value = 3.0
+value = 3.0
+
+[node name="Filler" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=1768108999]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="DirectConnectVBox" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=97492233]
+layout_mode = 2
+
+[node name="Join_Button" type="Button" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/DirectConnectVBox" unique_id=2134261325]
+layout_mode = 2
+disabled = true
+text = "Join
+"
+
+[node name="ID Prompt" type="LineEdit" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/DirectConnectVBox" unique_id=1801251480]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "LOBBY ID"
+
+[node name="RefreshHBox" type="HBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter" unique_id=855592386]
+layout_mode = 2
+
+[node name="BTN_Refresh" type="Button" parent="TabContainer/Join Steam/HBoxContainer/SearchFilter/RefreshHBox" unique_id=1579174589]
+layout_mode = 2
+text = "Refresh Server List"
+
+[node name="Search Results" type="VBoxContainer" parent="TabContainer/Join Steam/HBoxContainer" unique_id=814402589]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Label" type="Label" parent="TabContainer/Join Steam/HBoxContainer/Search Results" unique_id=1773938589]
+layout_mode = 2
+theme_override_font_sizes/font_size = 30
+text = "SERVERS"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="TabContainer/Join Steam/HBoxContainer/Search Results" unique_id=1162027739]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="ServerListContainer" type="VBoxContainer" parent="TabContainer/Join Steam/HBoxContainer/Search Results/ScrollContainer" unique_id=1466328461]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+
+[node name="Debug" type="Control" parent="TabContainer" unique_id=2020672457]
+visible = false
+layout_mode = 2
+metadata/_tab_index = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="TabContainer/Debug" unique_id=1634096990]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="TabContainer/Debug/HBoxContainer" unique_id=1721804418]
+layout_mode = 2
+
+[node name="BTN_HostDebug" type="Button" parent="TabContainer/Debug/HBoxContainer/VBoxContainer" unique_id=1425849562]
+layout_mode = 2
+text = "Host Debug"
+
+[node name="BTN_JoinDebug" type="Button" parent="TabContainer/Debug/HBoxContainer/VBoxContainer" unique_id=1167331721]
+layout_mode = 2
+text = "Join Debug"
+
+[connection signal="pressed" from="TabContainer/Host Steam/HBoxContainer/NetworkButtons/HostGameHBox/Host_Button" to="." method="_on_host_button_pressed"]
+[connection signal="pressed" from="TabContainer/Join Steam/HBoxContainer/SearchFilter/DirectConnectVBox/Join_Button" to="." method="_on_join_button_pressed"]
+[connection signal="text_changed" from="TabContainer/Join Steam/HBoxContainer/SearchFilter/DirectConnectVBox/ID Prompt" to="." method="_on_id_prompt_text_changed"]
+[connection signal="pressed" from="TabContainer/Join Steam/HBoxContainer/SearchFilter/RefreshHBox/BTN_Refresh" to="." method="_on_btn_refresh_pressed"]
+[connection signal="pressed" from="TabContainer/Debug/HBoxContainer/VBoxContainer/BTN_HostDebug" to="." method="_on_btn_host_debug_pressed"]
+[connection signal="pressed" from="TabContainer/Debug/HBoxContainer/VBoxContainer/BTN_JoinDebug" to="." method="_on_btn_join_debug_pressed"]

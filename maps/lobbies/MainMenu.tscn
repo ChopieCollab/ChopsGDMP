@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://suigokp6pvpt"]
+
+[node name="MainMenu" type="Node3D" unique_id=1088929242]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1458663051]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40319824, 0.039001465, -3.8452148)
+size = Vector3(6.7824707, 1.0780029, 8.69043)
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1223520821]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.857679, 4.0852695)

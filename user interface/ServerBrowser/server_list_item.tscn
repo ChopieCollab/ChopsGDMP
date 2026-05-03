@@ -1,0 +1,47 @@
+[gd_scene format=3 uid="uid://cny8v5031yc0i"]
+
+[ext_resource type="Script" uid="uid://dspnxwslxico0" path="res://user interface/ServerBrowser/server_list_item.gd" id="1_iniyn"]
+
+
+[node name="ServerListItem" type="Control" unique_id=481311550]
+custom_minimum_size = Vector2(500, 45)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_iniyn")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="." unique_id=1430539089]
+custom_minimum_size = Vector2(750, 25)
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="LB_ServerName" type="Label" parent="HBoxContainer" unique_id=1543642171]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Chopie's Server"
+
+[node name="LB_PlayerAmount" type="Label" parent="HBoxContainer" unique_id=1626482685]
+layout_mode = 2
+text = "1/4"
+
+[node name="LB_Buffer" type="Label" parent="HBoxContainer" unique_id=1382398537]
+layout_mode = 2
+text = "   "
+
+[node name="LB_LobbyPing" type="Label" parent="HBoxContainer" unique_id=383945711]
+layout_mode = 2
+text = "125"
+
+[node name="LB_Buffer2" type="Label" parent="HBoxContainer" unique_id=1491752888]
+layout_mode = 2
+text = "   "
+
+[node name="BT_JoinServerEntree" type="Button" parent="HBoxContainer" unique_id=702328826]
+layout_mode = 2
+text = "Join Server"
+
+[connection signal="pressed" from="HBoxContainer/BT_JoinServerEntree" to="." method="_on_bt_join_server_entree_pressed"]

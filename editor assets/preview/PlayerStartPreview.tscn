@@ -1,0 +1,14 @@
+[gd_scene format=3 uid="uid://by5htwgjpovxf"]
+
+[ext_resource type="Texture2D" uid="uid://bbyrl8dhbgy2n" path="res://editor assets/preview/PlayerStart.png" id="1_ljaji"]
+
+[node name="PlayerStartPreview" type="Sprite3D" unique_id=540581507]
+billboard = 1
+double_sided = false
+texture = ExtResource("1_ljaji")
+
+[node name="ChannelLabel" type="Label3D" parent="." unique_id=1105837449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.19917455, 0)
+billboard = 1
+double_sided = false
+text = "0"

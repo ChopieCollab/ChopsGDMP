@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://dobf41dijf3jn"]
+
+[ext_resource type="Script" uid="uid://d1p8x7f04y00l" path="res://critical/scripts/spawners.gd" id="1_hx3nd"]
+
+[node name="Spawners" type="Node" unique_id=947633446]
+script = ExtResource("1_hx3nd")
+
+[node name="MapSpawner" type="MultiplayerSpawner" parent="." unique_id=1395125126]
+spawn_limit = 1
+
+[node name="PlayerSpawner" type="MultiplayerSpawner" parent="." unique_id=32274146]
+
+[node name="DynamicSpawner" type="MultiplayerSpawner" parent="." unique_id=1179595100]

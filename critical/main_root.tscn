@@ -1,0 +1,21 @@
+[gd_scene format=3 uid="uid://bx56msakij10t"]
+
+[ext_resource type="PackedScene" uid="uid://etn4vket7vix" path="res://critical/UIContainer.tscn" id="1_ckv7i"]
+[ext_resource type="Script" uid="uid://cvoikqufr3k08" path="res://critical/scripts/main_root.gd" id="1_fil03"]
+[ext_resource type="PackedScene" uid="uid://ba2arcrctwvm8" path="res://critical/WorldContainer.tscn" id="2_6s6uh"]
+[ext_resource type="PackedScene" uid="uid://b56ad4kfac5jo" path="res://critical/Players.tscn" id="3_fil03"]
+[ext_resource type="PackedScene" uid="uid://dobf41dijf3jn" path="res://critical/Spawners.tscn" id="4_6s6uh"]
+[ext_resource type="PackedScene" uid="uid://eshupvhhu5p" path="res://critical/ItemContainer.tscn" id="4_bgm2b"]
+
+[node name="Main_Root" type="Node" unique_id=1745990412]
+script = ExtResource("1_fil03")
+
+[node name="UIContainer" parent="." unique_id=1507494859 instance=ExtResource("1_ckv7i")]
+
+[node name="WorldContainer" parent="." unique_id=198936740 instance=ExtResource("2_6s6uh")]
+
+[node name="DynamicContainer" parent="." unique_id=2015396534 instance=ExtResource("4_bgm2b")]
+
+[node name="Players" parent="." unique_id=113967180 instance=ExtResource("3_fil03")]
+
+[node name="Spawners" parent="." unique_id=947633446 instance=ExtResource("4_6s6uh")]
