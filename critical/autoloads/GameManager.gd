@@ -18,9 +18,9 @@ var GameStateSpawner: MultiplayerSpawner
 
 func _ready() -> void:
 	GameStateSpawner = MultiplayerSpawner.new()
+	self.add_child(GameStateSpawner) # Making a spawner for the gamestate to be synced C:
 	GameStateSpawner.spawn_path = self.get_path()
 	GameStateSpawner.spawn_function = _on_spawner_custom_spawn
-	self.add_child(GameStateSpawner) # Making a spawner for the gamestate to be synced C:
 
 func changeMap(MapPath: String):
 	ChangeMap.emit(MapPath)
@@ -35,9 +35,12 @@ func _on_gamemode_changed(NewGamemode): # This will presumably ONLY be called on
 	# personally I'd recommend making it so when you select the map you can choose the gamemode, and then adding an argument to
 	# the changeMap inside the GameManager (here) OR you could also just have separate maps with different gamemodes selected.
 	# which honestly could be good depending on if you want to modify the map slightly (think Wingman in CSGO)
-	active_gamemode.queue_free()
-	active_gamemode
-	var gm_scene = load(NewGamemode)
+	if active_gamemode == null:
+		pass
+	else:
+		active_gamemode.queue_free()
+	#active_gamemode
+	var gm_scene = NewGamemode # NewGamemode is packed
 	var instance = gm_scene.instantiate()
 	self.add_child(instance)
 	active_gamemode = instance #make sure we track the new one

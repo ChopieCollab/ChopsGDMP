@@ -11,6 +11,8 @@ extends Node3D
 func _ready() -> void:
 	if !default_gamemode:
 		push_error("ERROR: No gamemode, or invalid, selected for map!")
+	else:
+		GameManager.gamemode_packed = default_gamemode
 	if map_name == "Forgor To Name":
 		push_error("Warning: Forgot to name map!")
 

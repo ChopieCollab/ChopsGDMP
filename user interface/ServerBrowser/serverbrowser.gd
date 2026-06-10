@@ -6,8 +6,10 @@ var lobby_id : int = 0
 #var is_host : bool = false
 #var is_joining : bool = false
 
-signal sb_join(privacy, maxplayers, lobbyname)
-signal sb_host(lobbyidpass)
+signal sb_join(lobby_id_pass)
+signal sb_host(privacy, maxplayers, lobbyname)
+## NOTICE: IF YOU WANT TO ADD MORE LOBBY TAGS OTHER THAN JUST THE NAME, YOU'LL NEED TO PASS THEM THROUGH HERE.
+## AND ALSO MODIFY THE NETWORKMANAGER.
 
 signal sb_join_lan_debug()
 signal sb_host_lan_debug()
@@ -17,6 +19,7 @@ signal sb_host_lan_debug()
 @onready var cb_friends_only: CheckBox = $"TabContainer/Host Steam/HBoxContainer/Options/FriendsOnlyVBox/CB_FriendsOnly"
 @onready var sb_max_player: SpinBox = $"TabContainer/Host Steam/HBoxContainer/Options/MaxPlayerHBox/SB_MaxPlayer"
 @onready var txt_lobby_name: LineEdit = $"TabContainer/Host Steam/HBoxContainer/Options/LobbyNameHBox/TXT_LobbyName"
+@onready var cb_use_steam: CheckBox = $"TabContainer/Host Steam/HBoxContainer/NetworkButtons/UseSteamHBox/CB_UseSteam"
 
 ## JOIN
 @onready var id_prompt: LineEdit = $"TabContainer/Join Steam/HBoxContainer/SearchFilter/DirectConnectVBox/ID Prompt"
@@ -27,14 +30,25 @@ signal sb_host_lan_debug()
 @onready var cb_friends_only_join: CheckBox = $"TabContainer/Join Steam/HBoxContainer/SearchFilter/FriendsOnlyVBox/CB_FriendsOnly"
 @onready var cb_hide_full: CheckBox = $"TabContainer/Join Steam/HBoxContainer/SearchFilter/HideFullVBox/CB_HideFull"
 
+## ENet
+
+
 var ServerListItem = preload("res://user interface/ServerBrowser/server_list_item.tscn")
 
 ## DEBUG
 
 
 func _ready():
-	Steam.lobby_created.connect(_on_lobby_created) # tie steam to the lobby created
-	Steam.lobby_joined.connect(on_lobby_joined) # gets called on EVERY peer regardless on if they are joining or not.
+	#Steam.lobby_created.connect(_on_lobby_created) # tie steam to the lobby created
+	#Steam.lobby_joined.connect(on_lobby_joined) # gets called on EVERY peer regardless on if they are joining or not.
+	
+	## NOTICE I AM CONNECTING THE UI TO THE NETWORK MANAGER FROM THE UI BECAUSE THE UI IS TRANSIENT WHILE THE NETWORK MANAGER IS A GLOBAL.
+	## YOU CAN ADD DIFFERENT THINGS THAT LET YOU JOIN LOBBIES, OR LEAVE THEM ETC IN THE GAME, BUT THEY SHOULD CONNECT TO THE NETWORK MANAGER.
+	sb_host.connect(NetworkManager.host_lobby)
+	sb_join.connect(NetworkManager.join_lobby)
+	sb_host_lan_debug.connect(NetworkManager.HostLanDebug)
+	sb_join_lan_debug.connect(NetworkManager.JoinLanDebug)
+	
 	
 func host_lobby():
 	#print("Test!")

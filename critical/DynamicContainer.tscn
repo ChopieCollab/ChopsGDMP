@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://eshupvhhu5p"]
+
+[ext_resource type="Script" uid="uid://ckogws2w4t30e" path="res://critical/dynamic_container.gd" id="1_uw3dn"]
+
+[node name="DynamicContainer" type="Node" unique_id=2015396534]
+script = ExtResource("1_uw3dn")

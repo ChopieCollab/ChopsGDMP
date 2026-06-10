@@ -1,10 +1,21 @@
-[gd_scene format=3 uid="uid://suigokp6pvpt"]
+[gd_scene format=3 uid="uid://cg1pii02mmxx6"]
 
-[node name="MainMenu" type="Node3D" unique_id=1088929242]
+[ext_resource type="Script" uid="uid://wen3d1wjv3uh" path="res://base classes/map_base.gd" id="1_icemr"]
+[ext_resource type="PackedScene" uid="uid://b8t1514vqhhsl" path="res://gamemodes/GM_MainMenu.tscn" id="2_ry4n7"]
+[ext_resource type="PackedScene" uid="uid://brn74pf2pcm5j" path="res://map_actors/important/PlayerSpawn.tscn" id="3_oqyd8"]
 
-[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=1458663051]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.40319824, 0.039001465, -3.8452148)
-size = Vector3(6.7824707, 1.0780029, 8.69043)
+[node name="MainMenu" type="Node3D" unique_id=585935959]
+script = ExtResource("1_icemr")
+map_name = "MainMenu"
+default_gamemode = ExtResource("2_ry4n7")
+metadata/_custom_type_script = "uid://wen3d1wjv3uh"
 
-[node name="Camera3D" type="Camera3D" parent="." unique_id=1223520821]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.857679, 4.0852695)
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1161432741]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.6502606)
+current = true
+
+[node name="Label3D" type="Label3D" parent="." unique_id=921447448]
+text = "AAAAAAAAAAA!!!"
+
+[node name="PlayerSpawn" parent="." unique_id=229576828 instance=ExtResource("3_oqyd8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 1.2424023)

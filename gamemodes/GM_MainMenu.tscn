@@ -1,0 +1,13 @@
+[gd_scene format=3 uid="uid://b8t1514vqhhsl"]
+
+[ext_resource type="Script" uid="uid://dedkbbhk84tib" path="res://base classes/gamemode_base.gd" id="1_gqk2k"]
+[ext_resource type="PackedScene" uid="uid://cgk7ydhyowm60" path="res://player/P_MainMenu.tscn" id="2_w0ue7"]
+[ext_resource type="PackedScene" uid="uid://b7mycighxoblq" path="res://gamestates/GSMainMenu.tscn" id="3_qc8sl"]
+
+[node name="GmMainMenu" type="Node" unique_id=1483992597]
+script = ExtResource("1_gqk2k")
+gamemode_name = "GMMainMenu"
+default_pawn = ExtResource("2_w0ue7")
+default_spectator = ExtResource("2_w0ue7")
+game_state = ExtResource("3_qc8sl")
+metadata/_custom_type_script = "uid://dedkbbhk84tib"

@@ -1,0 +1,6 @@
+[gd_scene format=3 uid="uid://cil0biusssmol"]
+
+[ext_resource type="Script" uid="uid://mes6can23xa2" path="res://map_actors/important/scripts/prop_spawn_point.gd" id="1_7sa0a"]
+
+[node name="PropSpawnPoint" type="Marker3D" unique_id=1003254206]
+script = ExtResource("1_7sa0a")

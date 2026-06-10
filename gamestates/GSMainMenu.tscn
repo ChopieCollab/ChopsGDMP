@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://b7mycighxoblq"]
+
+[ext_resource type="Script" uid="uid://dytya4l3pxtl5" path="res://base classes/gamestate_base.gd" id="1_g0ejt"]
+
+[node name="GsMainMenu" type="Node" unique_id=1019726100]
+script = ExtResource("1_g0ejt")
+metadata/_custom_type_script = "uid://dytya4l3pxtl5"

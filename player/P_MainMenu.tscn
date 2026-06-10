@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://cgk7ydhyowm60"]
+
+[ext_resource type="Script" uid="uid://dk3ub3oumw57u" path="res://base classes/pawn.gd" id="1_bctlr"]
+[ext_resource type="Script" uid="uid://d350u8evihs1u" path="res://addons/netfox/rollback/rollback-synchronizer.gd" id="2_c4vn8"]
+[ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_qbau6"]
+
+[node name="PMainMenu" type="CharacterBody3D" unique_id=641796611 node_paths=PackedStringArray("RollbackSync", "InputNode")]
+script = ExtResource("1_bctlr")
+RollbackSync = NodePath("RollbackSynchronizer")
+InputNode = NodePath("Input")
+metadata/_custom_type_script = "uid://dk3ub3oumw57u"
+
+[node name="RollbackSynchronizer" type="Node" parent="." unique_id=1056689162 node_paths=PackedStringArray("root")]
+script = ExtResource("2_c4vn8")
+root = NodePath("..")
+state_properties = Array[String]([":global_transform"])
+enable_input_broadcast = false
+metadata/_custom_type_script = "uid://d350u8evihs1u"
+
+[node name="TickInterpolator" type="Node" parent="." unique_id=519186132 node_paths=PackedStringArray("root")]
+script = ExtResource("3_qbau6")
+root = NodePath("..")
+metadata/_custom_type_script = "uid://dour8fehaaugp"
+
+[node name="Input" type="Node" parent="." unique_id=901654560]

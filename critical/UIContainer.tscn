@@ -1,3 +1,17 @@
 [gd_scene format=3 uid="uid://etn4vket7vix"]
 
+[ext_resource type="Script" uid="uid://y5x8ax4683r" path="res://critical/ui_container.gd" id="1_u0dny"]
+
 [node name="UIContainer" type="Node" unique_id=1507494859]
+script = ExtResource("1_u0dny")
+
+[node name="BackgroundLayer" type="CanvasLayer" parent="." unique_id=1354547106]
+layer = -1
+
+[node name="HUDLayer" type="CanvasLayer" parent="." unique_id=277988671]
+
+[node name="MenuLayer" type="CanvasLayer" parent="." unique_id=1707538967]
+layer = 5
+
+[node name="OverlayLayer" type="CanvasLayer" parent="." unique_id=229166388]
+layer = 10

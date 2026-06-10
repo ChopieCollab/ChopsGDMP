@@ -33,6 +33,8 @@ extends Node
 # Just make sure you actually *HAVE* a spawn location for them at the specified channel. Currently the default behavior is to not set their transform, meaning
 # they will simply spawn at 0, 0, 0.
 
+func _ready() -> void:
+	GameManager.gamestate_packed = game_state # Sets the gamestate of the gamemanager to trigger the update logic.
 
 func _validate_scene():
 	if Engine.is_editor_hint():

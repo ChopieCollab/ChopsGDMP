@@ -171,6 +171,77 @@ func JoinLanDebug():
 		NetworkTime.start()
 	pass
 
+#region ENet Garbage. Ew gross. Use steam.
+## Im AI generating most of this because I dont like ENet and if you use this framework project with just ENet I'll be sad.
+## WOOO YEAH LETS GO GEMINI GENERATE THAT AI SLOP CODE
+const MAX_CLIENTS = 8
+
+func setup_upnp(port: int):
+	var upnp = UPNP.new()
+	
+	# 1. Discover the router on the local network
+	var discover_result = upnp.discover()
+	
+	if discover_result != UPNP.UPNP_RESULT_SUCCESS:
+		print("UPNP Discover Failed! Error: %s" % discover_result)
+		return
+	
+	# 2. Check if we have a valid gateway (router)
+	if upnp.get_gateway() and upnp.get_gateway().is_valid_gateway():
+		# 3. Request the port mapping (UDP is required for ENet)
+		var map_result = upnp.add_port_mapping(port, port, "Godot_Game", "UDP")
+		
+		if map_result != UPNP.UPNP_RESULT_SUCCESS:
+			print("UPNP Port Mapping Failed! Error: %s" % map_result)
+		else:
+			# SUCCESS! Give the host their external IP so they can share it
+			print("UPNP Success! External IP: %s" % upnp.query_external_address())
+	else:
+		print("No valid UPNP gateway found.")
+
+
+var DEFAULT_ENET_PORT = 7777 # SET THE DEFAULT PORT HERE, GOOGLE WHAT YOU WANT IT TO BE WOOO
+
+func enet_host_game(port):
+	setup_upnp(port)
+	# 1. Create the Peer
+	var peer = ENetMultiplayerPeer.new()
+	
+	# 2. Initialize as Server
+	var error = peer.create_server(DEFAULT_ENET_PORT, MAX_CLIENTS)
+	if error != OK:
+		print("Cannot host: " + str(error))
+		return
+		
+	# 3. Hand the peer to the Multiplayer API
+	multiplayer.multiplayer_peer = peer
+	multiplayer.peer_connected.connect(_peer_connected) # NEW: Call a func in the server network manager and emit signal, OLD: Add a player when someone connects
+	multiplayer.peer_disconnected.connect(_peer_disconnected) # Call a function and emit when a peer disconnects.
+	multiplayer.peer_connected.connect(_sync_player_rng) #Sync the master seed
+	#multiplayer.peer_connected.connect(_sync_player_rng)
+	debug("ENET server hosted! L ")
+	NetworkTime.start()
+	print("Server started on port ", DEFAULT_ENET_PORT)
+
+func enet_join_game(address: String = "127.0.0.1"):
+	# 1. Create the Peer
+	var peer = ENetMultiplayerPeer.new()
+	
+	# 2. Initialize as Client
+	var error = peer.create_client(address, DEFAULT_ENET_PORT)
+	if error != OK:
+		print("Cannot join: " + str(error))
+		return
+		
+	# 3. Hand the peer to the Multiplayer API
+	multiplayer.multiplayer_peer = peer
+	debug("Joined ENET server!")
+	multiplayer.peer_disconnected.connect(_peer_disconnected)
+	NetworkTime.start()
+	
+	print("Connecting to ", address)
+#endregion
+
 func _peer_connected(id: int):
 	connection_successful.emit()
 	client_connected.emit(id)
@@ -216,7 +287,8 @@ func sdbg(PrintMessage):
 func debug(PrintMessage):
 	if enable_dev_debugging:
 		if OS.is_debug_build():
-			print(str(multiplayer.get_unique_id()) + " | " + str(PrintMessage))
+			if multiplayer != null:
+				print(str(multiplayer.get_unique_id()) + " | " + str(PrintMessage))
 	
 func globaldebug(PrintMessage, id: int):
 	if enable_dev_debugging:

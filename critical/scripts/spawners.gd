@@ -23,7 +23,7 @@ const dynamics_list: Array[String] = [
 ]
 
 ## Defaults to setting the spawners to be everything listed above. The thing is it's *technically* unoptimal... if you want to be a NERD and not save scene refs to memory... depending on how big of a project you might want to use resources for each map and character that add "spawnable items" to the spawners... but regardless, ignore this for now c: 
-func _ready() -> void:
+func spawner_ready() -> void:
 	map_spawner.spawn_limit = 1 #Only ONE map at a time. Do not change this. Unless you're doing some funky stuff I guess.
 	set_spawn_locations_default()
 	clear_spawners()
@@ -45,6 +45,7 @@ func populate_spawners_default():
 		dynamic_spawner.add_spawnable_scene(dynamic)
 
 func set_spawn_locations_default():
+	print(main_root.world_container)
 	map_spawner.spawn_path = main_root.world_container.get_path()
 	player_spawner.spawn_path = main_root.players.get_path()
 	dynamic_spawner.spawn_path = main_root.dynamic_container.get_path()

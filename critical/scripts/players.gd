@@ -33,6 +33,7 @@ func _spawn_player(id: int, spawner_channel: int, pawn_packed: PackedScene):
 				chosen_spawn = spawn
 				break
 	var instance = pawn_packed.instantiate()
+	self.add_child(instance) #Sadly we need to spawn in the player before we can modify its transform data.
 	if chosen_spawn != null:
 		chosen_spawn.usedSpawn()
 		instance.global_position = chosen_spawn.global_position
@@ -41,7 +42,7 @@ func _spawn_player(id: int, spawner_channel: int, pawn_packed: PackedScene):
 		push_error("Warning: No player spawns available!")
 	instance.name = str(id) #Set the name to be the peer id
 	instance.Peer_ID = id #Set the actual peer ID in the pawn for input handling
-	self.add_child(instance)
+	#self.add_child(instance)
 	#GameManager.active_gamemode.default_pawn
 
 ## Hopefully only called by the server >->

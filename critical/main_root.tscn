@@ -3,12 +3,16 @@
 [ext_resource type="PackedScene" uid="uid://etn4vket7vix" path="res://critical/UIContainer.tscn" id="1_ckv7i"]
 [ext_resource type="Script" uid="uid://cvoikqufr3k08" path="res://critical/scripts/main_root.gd" id="1_fil03"]
 [ext_resource type="PackedScene" uid="uid://ba2arcrctwvm8" path="res://critical/WorldContainer.tscn" id="2_6s6uh"]
+[ext_resource type="PackedScene" uid="uid://cg1pii02mmxx6" path="res://maps/lobbies/MainMenu.tscn" id="2_hn76v"]
+[ext_resource type="PackedScene" uid="uid://btr8vxyrwuyfj" path="res://user interface/ServerBrowser/MainMenu.tscn" id="2_i10we"]
 [ext_resource type="PackedScene" uid="uid://b56ad4kfac5jo" path="res://critical/Players.tscn" id="3_fil03"]
 [ext_resource type="PackedScene" uid="uid://dobf41dijf3jn" path="res://critical/Spawners.tscn" id="4_6s6uh"]
-[ext_resource type="PackedScene" uid="uid://eshupvhhu5p" path="res://critical/ItemContainer.tscn" id="4_bgm2b"]
+[ext_resource type="PackedScene" uid="uid://eshupvhhu5p" path="res://critical/DynamicContainer.tscn" id="4_bgm2b"]
 
 [node name="Main_Root" type="Node" unique_id=1745990412]
 script = ExtResource("1_fil03")
+StartupMap = ExtResource("2_hn76v")
+StartupUI = ExtResource("2_i10we")
 
 [node name="UIContainer" parent="." unique_id=1507494859 instance=ExtResource("1_ckv7i")]
 
