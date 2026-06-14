@@ -15,11 +15,18 @@ var gamestate_packed: PackedScene: # This will presumably ONLY be changed on the
 signal ChangeMap
 
 var GameStateSpawner: MultiplayerSpawner
+var GameStateContainer: Node # this is the node for the spawned game states
 
 func _ready() -> void:
+	GameStateContainer = Node.new()
+	GameStateContainer.name = "GameStateContainer"
+	self.add_child(GameStateContainer)
+	
 	GameStateSpawner = MultiplayerSpawner.new()
+	GameStateSpawner.name = "GameStateSpawner" # I'm setting the name because i want to but also because its better for MP refs
 	self.add_child(GameStateSpawner) # Making a spawner for the gamestate to be synced C:
-	GameStateSpawner.spawn_path = self.get_path()
+	
+	GameStateSpawner.spawn_path = GameStateContainer.get_path()
 	GameStateSpawner.spawn_function = _on_spawner_custom_spawn
 
 func changeMap(MapPath: String):
@@ -60,6 +67,7 @@ func _on_gamestate_changed(NewGamestate): # This will presumably ONLY be called 
 		else:
 			#Nah we gonna not reset and keep the old one
 			pass
+
 
 # server ONLYYYYYY
 func server_spawn_gamestate(gs_path: String):

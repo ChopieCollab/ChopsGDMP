@@ -5,19 +5,57 @@
 [ext_resource type="Script" uid="uid://dour8fehaaugp" path="res://addons/netfox/tick-interpolator.gd" id="3_v2xh2"]
 [ext_resource type="Script" uid="uid://dqmw3tywaexd5" path="res://player/p_input_example.gd" id="4_l7hmg"]
 
-[node name="PExampleBody" type="CharacterBody3D" unique_id=1089507627]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_v2xh2"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_v2xh2"]
+
+[sub_resource type="SphereMesh" id="SphereMesh_v2xh2"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_l7hmg"]
+
+[node name="PExampleBody" type="CharacterBody3D" unique_id=1089507627 node_paths=PackedStringArray("RollbackSync", "InputNode")]
 script = ExtResource("1_v2xh2")
+RollbackSync = NodePath("RollbackSynchronizer")
+InputNode = NodePath("Input")
 metadata/_custom_type_script = "uid://dk3ub3oumw57u"
 
 [node name="RollbackSynchronizer" type="Node" parent="." unique_id=1661083223 node_paths=PackedStringArray("root")]
 script = ExtResource("2_kgq3q")
 root = NodePath("..")
+enable_prediction = true
+state_properties = Array[String]([":transform", "Head:rotation", ":velocity"])
+input_properties = Array[String](["Input:movement", "Input:look_rotation"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
 
 [node name="TickInterpolator" type="Node" parent="." unique_id=1122563885 node_paths=PackedStringArray("root")]
 script = ExtResource("3_v2xh2")
 root = NodePath("..")
+properties = Array[String]([":global_transform", "Head:rotation", ":velocity"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="Input" type="Node" parent="." unique_id=759963925]
 script = ExtResource("4_l7hmg")
+
+[node name="CapsuleHitbox" type="CollisionShape3D" parent="." unique_id=822613883]
+shape = SubResource("CapsuleShape3D_v2xh2")
+
+[node name="Head" type="Node3D" parent="." unique_id=1614980487]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.48272574, 0)
+
+[node name="Camera3D" type="Camera3D" parent="Head" unique_id=589873333]
+cull_mask = 1048319
+
+[node name="Glasses" type="MeshInstance3D" parent="Head" unique_id=1088468567]
+transform = Transform3D(1.0153317, 0, 0, 0, 0.3929075, 0, 0, 0, 0.68394923, 0, 0.039248705, -0.14579764)
+mesh = SubResource("BoxMesh_v2xh2")
+
+[node name="ClientHidden" type="Node3D" parent="." unique_id=2056854679]
+
+[node name="Belly" type="MeshInstance3D" parent="ClientHidden" unique_id=2127315844]
+transform = Transform3D(1, 0, 0, 0, 1.3051333, 0, 0, 0, 1, 0, -0.2940899, -0.087130725)
+mesh = SubResource("SphereMesh_v2xh2")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="ClientHidden" unique_id=1636064472]
+mesh = SubResource("CapsuleMesh_l7hmg")
+
+[node name="ClientDrawnOver" type="Node3D" parent="." unique_id=1091323786]

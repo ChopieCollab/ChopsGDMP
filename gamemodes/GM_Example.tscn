@@ -1,0 +1,12 @@
+[gd_scene format=3 uid="uid://bcsr008pjyvua"]
+
+[ext_resource type="Script" uid="uid://dedkbbhk84tib" path="res://base classes/gamemode_base.gd" id="1_7dmhd"]
+[ext_resource type="PackedScene" uid="uid://b3vaqfduh30h3" path="res://player/P_ExampleBody.tscn" id="2_jihm4"]
+[ext_resource type="PackedScene" uid="uid://cm4varufkch13" path="res://gamestates/GS_Example.tscn" id="3_x1vxo"]
+
+[node name="GmExample" type="Node" unique_id=659945487]
+script = ExtResource("1_7dmhd")
+default_pawn = ExtResource("2_jihm4")
+default_spectator = ExtResource("2_jihm4")
+game_state = ExtResource("3_x1vxo")
+metadata/_custom_type_script = "uid://dedkbbhk84tib"

@@ -24,3 +24,18 @@ func _ready() -> void:
 	
 	## Apparently, children call their ready functions first, and since spawners looks at the variables inside here to init, so call your readies here.
 	spawners.spawner_ready()
+
+
+func ClearAllContainers():
+	for child in players.get_children():
+		players.remove_child(child)
+		child.queue_free()
+	for child in dynamic_container.get_children():
+		dynamic_container.remove_child(child)
+		child.queue_free()
+	for child in world_container.get_children():
+		world_container.remove_child(child)
+		child.queue_free()
+	for child in GameManager.GameStateContainer.get_children():
+		GameManager.GameStateContainer.remove_child(child)
+		child.queue_free()

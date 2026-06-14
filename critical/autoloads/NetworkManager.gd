@@ -9,7 +9,7 @@ extends Node
 var lobby_id : int = 0
 var peer : SteamMultiplayerPeer
 var debugpeer : ENetMultiplayerPeer
-var debugport : int = 7000
+var debugport : int = 7321
 var is_host : bool = false
 var is_joining : bool = false
 var lobby_name : String = ""
@@ -78,12 +78,16 @@ func on_lobby_joined(lobby_id : int, permissions : int, locked : bool, response 
 	peer = SteamMultiplayerPeer.new()
 	peer.server_relay = true
 	peer.create_client(Steam.getLobbyOwner(lobby_id))
+	
+	multiplayer.multiplayer_peer = null
+	GameManager.Main_Root.ClearAllContainers()
+	
 	multiplayer.multiplayer_peer = peer
 	
 	multiplayer.peer_disconnected.connect(_peer_disconnected) ## CLIENT SIDE ONLY, WHEN THE CLIENT DISCONNECTS.
 	#gui_mgr.HideServerBrowser()
 	
-	NetworkTime.start()
+	#NetworkTime.start() ## NOTICE: Calling this on clients is what causes them to synchronize with the server and start their own tick timers.
 	
 	#connection_successful.emit()
 	is_joining = false
@@ -95,7 +99,7 @@ func InitLobbyData():
 		
 		# This might be buggy because steam hasn't had time to init the network fully? Might need to wait/redo it later, but we shall see.
 		var HostLocationString: String = Steam.convertPingLocationToString(Steam.getLocalPingLocation().get("location")) # Get the host's steam network location for ping calculations...
-		Steam.setLobbyData(lobby_id, "PingLocation", HostLocationString) # Set the steam location
+		Steam.setLobbyData(lobby_id, "PingLocation", HostLocationString) # Set the steam location, for when we get ping later smile C:
 		#Steam.setLobbyData(lobby_id,)
 	return
 
@@ -124,7 +128,10 @@ func _on_lobby_created(result: int, lobby_id: int):
 		#players_mgr._add_player(peer.get_unique_id()) # Add a player for ourselves since we're hosting.
 		client_connected.emit(peer.get_unique_id()) # So we add ourselves.
 		
-		NetworkTime.start()
+		GameManager.changeMap("res://maps/M_Example.tscn") ## NOTICE THIS IS WHAT THE "DEFAULT" MAP FOR HOSTING A LOBBY IS.
+		## YOU CAN MOVE STUFF AROUND OR CHANGE IT I REALLY DONT CARE IM PUTTING IT HERE THO SMILE C:
+		
+		#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
 		
 		#connection_successful.emit()
 		lobby_id_ready.emit(lobby_id)
@@ -146,7 +153,7 @@ func HostLanDebug():
 		multiplayer.peer_connected.connect(_sync_player_rng) #Sync the master seed
 		#multiplayer.peer_connected.connect(_sync_player_rng)
 		debug("LAN server hosted!")
-		NetworkTime.start()
+		#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
 		
 		if multiplayer.is_server():
 			randomize()
@@ -159,16 +166,21 @@ func HostLanDebug():
 		#multiplayer.peer_disconnected.connect(players_mgr._remove_player) # Remove a player when someone disconnects
 		#level_mgr.change_level("res://Multiplayer/LEVELS/MainHub.tscn") # Change the level to the basic hub
 		#players_mgr._add_player(debugpeer.get_unique_id()) # Add a player for ourselves since we're hosting.
+		client_connected.emit(debugpeer.get_unique_id()) # So we add ourselves.
+		GameManager.changeMap("res://maps/M_Example.tscn") ## NOTICE THIS IS WHAT THE "DEFAULT" MAP FOR HOSTING A LOBBY IS.
+		## YOU CAN MOVE STUFF AROUND OR CHANGE IT I REALLY DONT CARE IM PUTTING IT HERE THO SMILE C:
 
 func JoinLanDebug():
 	debugpeer = ENetMultiplayerPeer.new()
 	var error = debugpeer.create_client("127.0.0.1", debugport)
 	if error == OK:
+		multiplayer.multiplayer_peer = null
+		GameManager.Main_Root.ClearAllContainers()
 		#gui_mgr.HideServerBrowser()
 		multiplayer.multiplayer_peer = debugpeer
 		debug("Joined LAN server!")
 		multiplayer.peer_disconnected.connect(_peer_disconnected)
-		NetworkTime.start()
+		#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
 	pass
 
 #region ENet Garbage. Ew gross. Use steam.
@@ -220,7 +232,7 @@ func enet_host_game(port):
 	multiplayer.peer_connected.connect(_sync_player_rng) #Sync the master seed
 	#multiplayer.peer_connected.connect(_sync_player_rng)
 	debug("ENET server hosted! L ")
-	NetworkTime.start()
+	#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
 	print("Server started on port ", DEFAULT_ENET_PORT)
 
 func enet_join_game(address: String = "127.0.0.1"):
@@ -232,19 +244,22 @@ func enet_join_game(address: String = "127.0.0.1"):
 	if error != OK:
 		print("Cannot join: " + str(error))
 		return
-		
+	
+	multiplayer.multiplayer_peer = null
+	GameManager.Main_Root.ClearAllContainers()
 	# 3. Hand the peer to the Multiplayer API
 	multiplayer.multiplayer_peer = peer
 	debug("Joined ENET server!")
 	multiplayer.peer_disconnected.connect(_peer_disconnected)
-	NetworkTime.start()
+	#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
 	
 	print("Connecting to ", address)
 #endregion
 
 func _peer_connected(id: int):
 	connection_successful.emit()
-	client_connected.emit(id)
+	if multiplayer.is_server():
+		client_connected.emit(id)
 
 func _peer_disconnected(id: int):
 	client_disconnected.emit(id)

@@ -2,7 +2,6 @@
 
 [ext_resource type="Script" uid="uid://dspnxwslxico0" path="res://user interface/ServerBrowser/server_list_item.gd" id="1_iniyn"]
 
-
 [node name="ServerListItem" type="Control" unique_id=481311550]
 custom_minimum_size = Vector2(500, 45)
 layout_mode = 3

@@ -10,7 +10,19 @@ func _ready() -> void:
 
 func _client_connected(id: int):
 	#I was very tempted to add the default behavior for them spawning in... so I think I might actually do that lmao
+	
+	if !multiplayer.is_server():
+		return ## NOTICE: I think I did something stupid earlier and made it so clients call this. Going to see if this fixes it.
+	
 	#pass
+	await get_tree().create_timer(0.05).timeout ## NOTICE: THE AWAIT OF DOOM AND DESPAIR
+	## I'm pretty sure the reason this happens is because the players node is called first since its farther down the tree
+	## I'm uncertain on if this will work as an actual fix with latency but we shall see later.
+	### BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG
+	print("test")
+	print(GameManager.active_gamemode)
+	print(GameManager.active_gamemode.SpawnOnConnect)
+	#await get_tree().create_timer(1.0).timeout
 	if GameManager.active_gamemode.SpawnOnConnect:
 		_spawn_player(id, GameManager.active_gamemode.SpawnOnConnectChannel, GameManager.active_gamemode.default_pawn)
 
@@ -20,6 +32,10 @@ func _client_disconnected(id: int): ## Despawn the player. Since this is called 
 
 ## Spawn a player. We pass in the ID because we want to set the input prediction to be owned by that ID. c: synced using the multiplayer player spawner. Also only called on server.
 func _spawn_player(id: int, spawner_channel: int, pawn_packed: PackedScene):
+	
+	if !multiplayer.is_server():
+		return ## NOTICE: I think I did something stupid earlier and made it so clients call this. Going to see if this fixes it.
+	
 	await get_tree().process_frame # Wait in case any other scripts modify player spawn locations
 	if spawner_channel != 0:
 		var spawner_channel_check = spawner_channel
@@ -33,6 +49,8 @@ func _spawn_player(id: int, spawner_channel: int, pawn_packed: PackedScene):
 				chosen_spawn = spawn
 				break
 	var instance = pawn_packed.instantiate()
+	instance.name = str(id) #Set the name to be the peer id
+	instance.Peer_ID = id #Set the actual peer ID in the pawn for input handling
 	self.add_child(instance) #Sadly we need to spawn in the player before we can modify its transform data.
 	if chosen_spawn != null:
 		chosen_spawn.usedSpawn()
@@ -40,8 +58,8 @@ func _spawn_player(id: int, spawner_channel: int, pawn_packed: PackedScene):
 		instance.global_rotation = chosen_spawn.global_rotation
 	else:
 		push_error("Warning: No player spawns available!")
-	instance.name = str(id) #Set the name to be the peer id
-	instance.Peer_ID = id #Set the actual peer ID in the pawn for input handling
+	#instance.name = str(id) #Set the name to be the peer id
+	#instance.Peer_ID = id #Set the actual peer ID in the pawn for input handling
 	#self.add_child(instance)
 	#GameManager.active_gamemode.default_pawn
 

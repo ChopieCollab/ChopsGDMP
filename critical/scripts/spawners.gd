@@ -7,11 +7,14 @@ extends Node
 
 ## A list of map scenes that are spawned for the players. Only one will be active at a time by default. I opted to put this here instead of a project settings because you can drag and drop maps here.
 const map_list: Array[String] = [
-	"res://maps/lobbies/MainMenu.tscn"
+	"res://maps/lobbies/MainMenu.tscn",
+	"res://maps/M_Example.tscn"
 ]
 
 ## A list of player scenes that can be spawned for the player. An example would be the spectator camera or a player scene. These are added to the players spawner.
 const player_list: Array[String] = [
+	"res://player/P_MainMenu.tscn",
+	"res://player/P_ExampleBody.tscn"
 ]
 
 ## A list of "items" that are possibly scattered about the level. These are dynamically spawned, since they may be picked up etc. These are added to the dnynamics spawner.

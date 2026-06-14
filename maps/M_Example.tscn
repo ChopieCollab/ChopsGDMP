@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://c6v8ga06sq7sf"]
+
+[ext_resource type="Script" uid="uid://wen3d1wjv3uh" path="res://base classes/map_base.gd" id="1_xl1ec"]
+[ext_resource type="PackedScene" uid="uid://bcsr008pjyvua" path="res://gamemodes/GM_Example.tscn" id="2_86w1h"]
+[ext_resource type="PackedScene" uid="uid://brn74pf2pcm5j" path="res://map_actors/important/PlayerSpawn.tscn" id="3_gem6p"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_gem6p"]
+
+[sub_resource type="Sky" id="Sky_d5gy5"]
+sky_material = SubResource("ProceduralSkyMaterial_gem6p")
+
+[sub_resource type="Environment" id="Environment_gem6p"]
+background_mode = 2
+sky = SubResource("Sky_d5gy5")
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_d5gy5"]
+
+[sub_resource type="Compositor" id="Compositor_wuqbh"]
+
+[node name="MExample" type="Node3D" unique_id=1578638971]
+script = ExtResource("1_xl1ec")
+map_name = "ExampleMap"
+default_gamemode = ExtResource("2_86w1h")
+metadata/_custom_type_script = "uid://wen3d1wjv3uh"
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=370198024]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2788086, 0, -0.04647827)
+use_collision = true
+size = Vector3(7.823242, 1, 8.42865)
+
+[node name="PlayerSpawn" parent="." unique_id=229576828 instance=ExtResource("3_gem6p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09743869, 1.2915802, -1.0926826)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1614232911]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10996401, 1.4323192, -4.206199)
+text = "Example Map!"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=159159170]
+environment = SubResource("Environment_gem6p")
+camera_attributes = SubResource("CameraAttributesPhysical_d5gy5")
+compositor = SubResource("Compositor_wuqbh")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=1814706680]
+transform = Transform3D(1, 0, 0, 0, 0.6725218, 0.74007726, 0, -0.74007726, 0.6725218, 0, 4.75643, 2.964849)
