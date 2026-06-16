@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://cn5q2oscgank8"]
+
+[ext_resource type="Script" uid="uid://dedkbbhk84tib" path="res://base classes/gamemode_base.gd" id="1_20ifh"]
+[ext_resource type="PackedScene" uid="uid://t6how8l6bmti" path="res://gamestates/GS_Debug.tscn" id="2_o8rma"]
+
+[node name="GmDebug" type="Node" unique_id=128908668]
+script = ExtResource("1_20ifh")
+gamemode_name = "Debug"
+game_state = ExtResource("2_o8rma")
+metadata/_custom_type_script = "uid://dedkbbhk84tib"

@@ -15,7 +15,7 @@ func _client_connected(id: int):
 		return ## NOTICE: I think I did something stupid earlier and made it so clients call this. Going to see if this fixes it.
 	
 	#pass
-	await get_tree().create_timer(0.05).timeout ## NOTICE: THE AWAIT OF DOOM AND DESPAIR
+	#await get_tree().create_timer(0.05).timeout ## NOTICE: THE AWAIT OF DOOM AND DESPAIR
 	## I'm pretty sure the reason this happens is because the players node is called first since its farther down the tree
 	## I'm uncertain on if this will work as an actual fix with latency but we shall see later.
 	### BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG BUG
@@ -35,6 +35,10 @@ func _spawn_player(id: int, spawner_channel: int, pawn_packed: PackedScene):
 	
 	if !multiplayer.is_server():
 		return ## NOTICE: I think I did something stupid earlier and made it so clients call this. Going to see if this fixes it.
+	
+	if pawn_packed == null:
+		push_error("PlayerManager: pawn_packed is null! The Gamemode is missing a default_pawn.")
+		return
 	
 	await get_tree().process_frame # Wait in case any other scripts modify player spawn locations
 	if spawner_channel != 0:
@@ -82,5 +86,9 @@ func _reloadMap(MapPath):
 ## Despawn ALLLLL the players... and then HOPEFULLY you're going to respawn them all lol
 func despawnAll():
 	var playerIDs = multiplayer.get_peers() # Get all the peer IDs
+	
+	#if multiplayer.is_server():
+	playerIDs.append(1)
+	
 	for ID in playerIDs:
 		_despawn_player(ID)

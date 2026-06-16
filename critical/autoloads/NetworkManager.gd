@@ -126,8 +126,8 @@ func _on_lobby_created(result: int, lobby_id: int):
 		#multiplayer.peer_disconnected.connect(players_mgr._remove_player) # Remove a player when someone disconnects
 		#level_mgr.change_level("res://Multiplayer/LEVELS/MainHub.tscn") # Change the level to the basic hub
 		#players_mgr._add_player(peer.get_unique_id()) # Add a player for ourselves since we're hosting.
-		client_connected.emit(peer.get_unique_id()) # So we add ourselves.
-		
+		#client_connected.emit(peer.get_unique_id()) # So we add ourselves.
+		GameManager.Main_Root.ClearAllContainers()
 		GameManager.changeMap("res://maps/M_Example.tscn") ## NOTICE THIS IS WHAT THE "DEFAULT" MAP FOR HOSTING A LOBBY IS.
 		## YOU CAN MOVE STUFF AROUND OR CHANGE IT I REALLY DONT CARE IM PUTTING IT HERE THO SMILE C:
 		
@@ -139,6 +139,7 @@ func _on_lobby_created(result: int, lobby_id: int):
 		InitLobbyData() # Setting the lobby data for server browser
 		#gui_mgr.HideServerBrowser()
 		debug("Lobby created, lobby ID: " + str(lobby_id))
+		client_connected.emit(peer.get_unique_id()) # So we add ourselves.
 
 
 
@@ -166,9 +167,12 @@ func HostLanDebug():
 		#multiplayer.peer_disconnected.connect(players_mgr._remove_player) # Remove a player when someone disconnects
 		#level_mgr.change_level("res://Multiplayer/LEVELS/MainHub.tscn") # Change the level to the basic hub
 		#players_mgr._add_player(debugpeer.get_unique_id()) # Add a player for ourselves since we're hosting.
-		client_connected.emit(debugpeer.get_unique_id()) # So we add ourselves.
+		#client_connected.emit(debugpeer.get_unique_id()) # So we add ourselves.
+		GameManager.Main_Root.ClearAllContainers()
 		GameManager.changeMap("res://maps/M_Example.tscn") ## NOTICE THIS IS WHAT THE "DEFAULT" MAP FOR HOSTING A LOBBY IS.
 		## YOU CAN MOVE STUFF AROUND OR CHANGE IT I REALLY DONT CARE IM PUTTING IT HERE THO SMILE C:
+		
+		client_connected.emit(debugpeer.get_unique_id()) # So we add ourselves.
 
 func JoinLanDebug():
 	debugpeer = ENetMultiplayerPeer.new()
@@ -182,6 +186,99 @@ func JoinLanDebug():
 		multiplayer.peer_disconnected.connect(_peer_disconnected)
 		#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
 	pass
+
+
+
+## DEBUG PAWN LAN HOSTING
+func HostLanPawnDebug():
+	debugpeer = ENetMultiplayerPeer.new()
+	var error = debugpeer.create_server(debugport, 4)
+	if error == OK:
+		multiplayer.multiplayer_peer = debugpeer
+		multiplayer.peer_connected.connect(_peer_connected) 
+		multiplayer.peer_disconnected.connect(_peer_disconnected) 
+		multiplayer.peer_connected.connect(_sync_player_rng) 
+		
+		debug("LAN server hosted!")
+		
+		if multiplayer.is_server():
+			randomize()
+			master_seed = randi()
+			debug("Master Seed is: " + str(master_seed))
+			
+		#client_connected.emit(debugpeer.get_unique_id())
+		
+		# Pull the map path from GameManager, or use default
+		var map_to_load = GameManager.debug_map_path_override
+		if map_to_load != "Null" and map_to_load != "":
+			GameManager.changeMap(map_to_load)
+		else:
+			GameManager.changeMap("res://maps/M_Debug.tscn")
+		
+		await get_tree().process_frame
+		await get_tree().process_frame
+		
+		# NEW: Check if a debug pawn is waiting in the wings!
+		if GameManager.debug_pawn_path_override != "":
+			print("Injecting Debug Pawn into Gamemode!")
+			var PawnScene = load(GameManager.debug_pawn_path_override)
+			GameManager.active_gamemode.default_pawn = PawnScene
+			# Clear it so it doesn't accidentally spawn again on map changes
+			GameManager.debug_pawn_path_override = ""
+		
+		client_connected.emit(debugpeer.get_unique_id())
+		# We removed the active_gamemode.default_pawn line here!
+		# GameManager now handles that automatically when the gamemode loads.
+
+### DEBUG PAWN LAN HOSTING
+#func HostLanPawnDebug(PawnPath, MapPath):
+	#debugpeer = ENetMultiplayerPeer.new()
+	#var error = debugpeer.create_server(debugport, 4)
+	#if error == OK:
+		#multiplayer.multiplayer_peer = debugpeer
+		#multiplayer.peer_connected.connect(_peer_connected) # NEW: Call a func in the server network manager and emit signal, OLD: Add a player when someone connects
+		#multiplayer.peer_disconnected.connect(_peer_disconnected) # Call a function and emit when a peer disconnects.
+		#multiplayer.peer_connected.connect(_sync_player_rng) #Sync the master seed
+		##multiplayer.peer_connected.connect(_sync_player_rng)
+		#debug("LAN server hosted!")
+		##NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
+		#
+		#if multiplayer.is_server():
+			#randomize()
+			#master_seed = randi()
+			#debug("Master Seed is: " + str(master_seed))
+			##_init_local_rng(master_seed, multiplayer.get_unique_id())
+		#
+		##gui_mgr.HideServerBrowser()
+		##multiplayer.peer_connected.connect(players_mgr._add_player) # Add a player when someone connects
+		##multiplayer.peer_disconnected.connect(players_mgr._remove_player) # Remove a player when someone disconnects
+		##level_mgr.change_level("res://Multiplayer/LEVELS/MainHub.tscn") # Change the level to the basic hub
+		##players_mgr._add_player(debugpeer.get_unique_id()) # Add a player for ourselves since we're hosting.
+		#client_connected.emit(debugpeer.get_unique_id()) # So we add ourselves.
+		#if MapPath != "Null":
+			#GameManager.changeMap(MapPath)
+		#else:
+			#GameManager.changeMap("res://maps/M_Debug.tscn")
+		#
+		#GameManager.active_gamemode.default_pawn = PawnPath
+		### NOTICE THIS IS WHAT THE "DEFAULT" DEBUG MAP FOR HOSTING A LOBBY IS.
+		### YOU CAN MOVE STUFF AROUND OR CHANGE IT I REALLY DONT CARE IM PUTTING IT HERE THO SMILE C:
+
+func JoinLanPawnDebug():
+	debugpeer = ENetMultiplayerPeer.new()
+	var error = debugpeer.create_client("127.0.0.1", debugport)
+	if error == OK:
+		multiplayer.multiplayer_peer = null
+		GameManager.Main_Root.ClearAllContainers()
+		#gui_mgr.HideServerBrowser()
+		multiplayer.multiplayer_peer = debugpeer
+		debug("Joined LAN server!")
+		multiplayer.peer_disconnected.connect(_peer_disconnected)
+		#NetworkTime.start() ## NOTICE: IF YOU WANT TO TURN OFF NETFOX EVENTS IN THE PROJECT SETTINGS YOU'LL NEED TO ADD THIS BACK.
+	pass
+
+
+
 
 #region ENet Garbage. Ew gross. Use steam.
 ## Im AI generating most of this because I dont like ENet and if you use this framework project with just ENet I'll be sad.

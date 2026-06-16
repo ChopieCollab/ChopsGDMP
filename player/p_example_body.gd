@@ -16,10 +16,7 @@ func _ready() -> void:
 	super() ## NOTICE YOU BETTER DO THIS OR ELSE I WILL FIND YOU.
 	## NOTICE ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 	#print("Spawned!")
-	## Peer ID is in the parent class, it is the Peer ID of the person who "controls" this pawn.
-	## I'm adding a delay here because the order of operations for setting the owner is SLIGHTLY off.
-	## I recommend fixing this if you want but I personally cannot be bothered rn
-	await get_tree().process_frame # Waiting for the Peer_ID to be updated
+	
 	if Peer_ID == multiplayer.get_unique_id(): #Checking the current instance of multiplayer against the "owner"
 		## NOTICE: You will likely be doing this unless you handle this code on the Input node, because
 		## The server is technically the multiplayer authority on this node, we can't do multiplayer.is_authority().

@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://t6how8l6bmti"]
+
+[ext_resource type="Script" uid="uid://dytya4l3pxtl5" path="res://base classes/gamestate_base.gd" id="1_xbjr1"]
+
+[node name="GsDebug" type="Node" unique_id=1297351661]
+script = ExtResource("1_xbjr1")
+metadata/_custom_type_script = "uid://dytya4l3pxtl5"

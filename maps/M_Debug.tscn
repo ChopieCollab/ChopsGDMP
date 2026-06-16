@@ -1,0 +1,44 @@
+[gd_scene format=3 uid="uid://jarbn27227r6"]
+
+[ext_resource type="Script" uid="uid://wen3d1wjv3uh" path="res://base classes/map_base.gd" id="1_p0yld"]
+[ext_resource type="PackedScene" uid="uid://cn5q2oscgank8" path="res://gamemodes/GM_Debug.tscn" id="2_407d7"]
+[ext_resource type="PackedScene" uid="uid://brn74pf2pcm5j" path="res://map_actors/important/PlayerSpawn.tscn" id="3_oxr87"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hqf26"]
+
+[sub_resource type="Sky" id="Sky_d5gy5"]
+sky_material = SubResource("ProceduralSkyMaterial_hqf26")
+
+[sub_resource type="Environment" id="Environment_i4603"]
+background_mode = 2
+sky = SubResource("Sky_d5gy5")
+
+[sub_resource type="CameraAttributesPhysical" id="CameraAttributesPhysical_r4a48"]
+
+[sub_resource type="Compositor" id="Compositor_ml8yx"]
+
+[node name="MDebug" type="Node3D" unique_id=364895913]
+script = ExtResource("1_p0yld")
+map_name = "Debug"
+default_gamemode = ExtResource("2_407d7")
+metadata/_custom_type_script = "uid://wen3d1wjv3uh"
+
+[node name="CSGBox3D" type="CSGBox3D" parent="." unique_id=2003477885]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.2788086, 0, -0.04647827)
+use_collision = true
+size = Vector3(7.823242, 1, 8.42865)
+
+[node name="PlayerSpawn" parent="." unique_id=229576828 instance=ExtResource("3_oxr87")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.09743869, 1.2915802, -1.0926826)
+
+[node name="Label3D" type="Label3D" parent="." unique_id=1531751118]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.10996401, 1.4323192, -4.206199)
+text = "DEBUGGGGG MAPPPP"
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="." unique_id=1466393420]
+environment = SubResource("Environment_i4603")
+camera_attributes = SubResource("CameraAttributesPhysical_r4a48")
+compositor = SubResource("Compositor_ml8yx")
+
+[node name="Camera3D" type="Camera3D" parent="." unique_id=369964381]
+transform = Transform3D(1, 0, 0, 0, 0.6725218, 0.74007726, 0, -0.74007726, 0.6725218, 0, 4.75643, 2.964849)

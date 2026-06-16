@@ -15,3 +15,7 @@ func on_open() -> void:
 
 func on_close() -> void:
 	queue_free() # override this with your own logic if you wish, but this is mainly for the menu logic
+
+func on_reveal() -> void:
+	pass #override this func with your on re-opening of menu behavior. So like if you closed it, and then reshowed it.
+## NOTICE: Could be expanded upon! I encourage it!

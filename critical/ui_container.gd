@@ -15,7 +15,7 @@ extends Node
 
 var menu_stack: Array[UIBase] = []
 
-func open_ui(ui_scene: PackedScene) -> void:
+func open_ui(ui_scene: PackedScene):
 	var ui_instance = ui_scene.instantiate() as UIBase
 	if ui_instance == null:
 		push_error("Extend your UI off of UIBase or I will in fact kill you.")
@@ -32,15 +32,32 @@ func open_ui(ui_scene: PackedScene) -> void:
 		menu_stack.push_back(ui_instance)
 	
 	ui_instance.on_open() # Basically the on ready lol
+	return ui_instance
 
 func close_top_menu() -> void:
 	if menu_stack.size() == 0:
 		return
 	
-	# Removes the top menu from the array, then we go delete it 
+	# should remove the top menu from the array, then we go delete it 
 	var top_menu = menu_stack.pop_back()
 	top_menu.on_close() # most will have queue_free() in their on_close... hopefully..
 	
-	# If there is another menu underneath, reveal it
+	# if there is another menu underneath, reveal it
 	if menu_stack.size() > 0:
 		menu_stack.back().show()
+		menu_stack.back().on_reveal()
+
+func close_ui(ui_instance: UIBase) -> void:
+	if ui_instance == null:
+		push_error("You tried to close a UI that doesn't exist goober. Who are you fighting?")
+		return
+
+	if ui_instance.target_layer == UIBase.LayerType.MENU:
+		if menu_stack.has(ui_instance):
+			if menu_stack.back() == ui_instance:
+				close_top_menu()
+				return 
+			else:
+				menu_stack.erase(ui_instance)
+	# if its NOT a menu type, it'll just do the normal on close.
+	ui_instance.on_close()

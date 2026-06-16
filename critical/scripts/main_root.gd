@@ -17,16 +17,22 @@ func _enter_tree():
 	GameManager.Main_Root = self
 
 func _ready() -> void:
+	GameManager.Main_Root = self
+	GameManager.UsedMainMenu = true ## NOTICE: This is just for debugging stuff! Primarily the pawn debug arena spawning logic!
 	if StartupMap != null:
 		GameManager.changeMap(StartupMap.resource_path)
-	if StartupUI != null:
+	if StartupUI != null: ## NOTICE: Another reason not to do this, is because it complicates the UI for debugging pawns!
+		## TODO: Change the system for spawning players, or possibly make it so it automatically makes a host so pawns spawn in
+		## the main menu.
 		ui_container.open_ui(StartupUI)
 	
 	## Apparently, children call their ready functions first, and since spawners looks at the variables inside here to init, so call your readies here.
 	spawners.spawner_ready()
+	players._spawn_player(1, GameManager.active_gamemode.SpawnOnConnectChannel, GameManager.active_gamemode.default_pawn)
 
 
 func ClearAllContainers():
+	print("YEP")
 	for child in players.get_children():
 		players.remove_child(child)
 		child.queue_free()

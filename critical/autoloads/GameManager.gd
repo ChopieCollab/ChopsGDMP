@@ -17,6 +17,13 @@ signal ChangeMap
 var GameStateSpawner: MultiplayerSpawner
 var GameStateContainer: Node # this is the node for the spawned game states
 
+var UsedMainMenu: bool = false ## NOTICE: THis var is just here for the debuging tools!
+## Primarily used by the pawn, this is the only way to differentiate between hitting play and hitting the debug scene...
+
+var debug_pawn_path_override: String = ""
+var debug_map_path_override: String = ""
+
+
 func _ready() -> void:
 	GameStateContainer = Node.new()
 	GameStateContainer.name = "GameStateContainer"
@@ -84,3 +91,20 @@ func _on_spawner_custom_spawn(path: Variant) -> Node:
 	# this happens on the client AND the server now. So yippieee
 	active_gamestate = instance #make sure we track the new one
 	return instance # tell the spawner to keep track of this node for when we delete it later probs
+
+# Add this new function to handle the safe sequence
+func TriggerDebugBoot(pawn_path: String, map_path: String):
+	await get_tree().process_frame
+	debug_pawn_path_override = pawn_path
+	debug_map_path_override = map_path
+	
+	# 1. Change to the main root scene
+	#await get_tree().process_frame
+	get_tree().change_scene_to_file("res://critical/main_root.tscn")
+	#Main_Root.ClearAllContainers()
+	# 2. Wait two frames to guarantee the scene tree has completely swapped
+	await get_tree().process_frame
+	await get_tree().process_frame
+	Main_Root.ClearAllContainers()
+	# 3. Now that Main Root is loaded, tell the NetworkManager to host
+	NetworkManager.HostLanPawnDebug()
