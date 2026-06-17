@@ -22,7 +22,6 @@ metadata/_custom_type_script = "uid://dk3ub3oumw57u"
 [node name="RollbackSynchronizer" type="Node" parent="." unique_id=1661083223 node_paths=PackedStringArray("root")]
 script = ExtResource("2_kgq3q")
 root = NodePath("..")
-enable_prediction = true
 state_properties = Array[String]([":transform", "Head:rotation", ":velocity"])
 input_properties = Array[String](["Input:movement", "Input:look_rotation"])
 metadata/_custom_type_script = "uid://d350u8evihs1u"
@@ -30,7 +29,7 @@ metadata/_custom_type_script = "uid://d350u8evihs1u"
 [node name="TickInterpolator" type="Node" parent="." unique_id=1122563885 node_paths=PackedStringArray("root")]
 script = ExtResource("3_v2xh2")
 root = NodePath("..")
-properties = Array[String]([":global_transform", "Head:rotation", ":velocity"])
+properties = Array[String]([":transform", "Head:rotation"])
 metadata/_custom_type_script = "uid://dour8fehaaugp"
 
 [node name="Input" type="Node" parent="." unique_id=759963925]
